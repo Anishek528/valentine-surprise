@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Will You Be My Valentine 💖</title>
+<title>Pooja, Will You Be My Valentine 💖</title>
 
 <style>
 body {
@@ -93,7 +93,7 @@ button {
 </audio>
 
 <div class="card">
-  <h1>Will you be my Valentine? 💕</h1>
+  <h1>Pooja 💕<br>Will you be my Valentine?</h1>
   <button id="yesBtn">Yes 💖</button>
   <button id="noBtn">No 😜</button>
   <div id="countdown" class="countdown"></div>
@@ -109,41 +109,43 @@ const countdownEl = document.getElementById("countdown");
 let noClickCount = 0;
 let yesSize = 1;
 
-// NO button logic (ONLY 2 TRIES)
+// NO button logic (2 tries)
 noBtn.addEventListener("click", () => {
+
   noClickCount++;
   yesSize += 0.4;
   yesBtn.style.transform = `scale(${yesSize})`;
 
   if (noClickCount === 1) {
-    alert("Hmm... are you absolutely sure? 😏");
+    alert("Pooja... are you absolutely sure? 😏");
   } 
   else if (noClickCount === 2) {
-    alert("Too late 😌 Destiny has decided 💖");
+    alert("Destiny is strongly suggesting YES 😌💖");
     card.classList.add("shake");
     noBtn.style.display = "none";
     startCountdown();
   }
 });
 
-// Countdown
+// Countdown (no auto yes)
 function startCountdown() {
   let count = 3;
   countdownEl.innerText = count;
 
   const interval = setInterval(() => {
     count--;
+
     if (count > 0) {
       countdownEl.innerText = count;
     } else {
       clearInterval(interval);
-      countdownEl.innerText = "YES ❤️";
-      triggerFinal();
+      countdownEl.innerText = "Your move ❤️";
     }
+
   }, 1000);
 }
 
-// Hearts animation
+// Hearts
 function createHearts() {
   setInterval(() => {
     const heart = document.createElement("div");
@@ -152,30 +154,38 @@ function createHearts() {
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.animationDuration = (4 + Math.random() * 3) + "s";
     document.body.appendChild(heart);
+
     setTimeout(() => heart.remove(), 7000);
   }, 300);
 }
 
-// YES click
-yesBtn.addEventListener("click", triggerFinal);
+// YES button
+yesBtn.addEventListener("click", () => {
 
-function triggerFinal() {
   music.play().catch(() => {});
+
   card.innerHTML = `
     <div class="final">
-      <h1>Yayyy! 💖😍</h1>
-      <h2>I knew it 😌❤️</h2>
+      <h1>Pooja 💖</h1>
+      <h2>You are my forever 😍</h2>
+
       <p style="font-size:20px; max-width:600px;">
-        You are my forever,
-        my safest place,
-        and my greatest blessing 💕<br><br>
-        I would choose you in every lifetime.
+        You are my safest place,
+        my best decision,
+        my favorite smile,
+        and my greatest blessing.<br><br>
+
+        I would choose you again and again,
+        in every lifetime,
+        in every universe. 💕
       </p>
+
       <h3>Forever yours,<br>Anishek 😘</h3>
     </div>
   `;
+
   createHearts();
-}
+});
 </script>
 
 </body>
