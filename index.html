@@ -5,7 +5,7 @@
   <title>Will You Be My Valentine 💖</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       height: 100vh;
       margin: 0;
@@ -22,6 +22,7 @@
       text-align: center;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       z-index: 2;
+      position: relative;
     }
 
     h1 {
@@ -53,6 +54,7 @@
       bottom: -20px;
       font-size: 24px;
       animation: floatUp 6s linear infinite;
+      pointer-events: none;
     }
 
     @keyframes floatUp {
@@ -60,7 +62,7 @@
       100% { transform: translateY(-110vh); opacity: 0; }
     }
 
-    /* Fade-in message */
+    /* Fade-in animation */
     .final {
       animation: fadeIn 2s ease-in forwards;
       opacity: 0;
@@ -73,27 +75,31 @@
 </head>
 <body>
 
-  <audio id="loveMusic" loop>
+  <!-- Audio -->
+  <audio id="loveMusic" loop preload="auto">
     <source src="music.mp3" type="audio/mpeg">
   </audio>
 
   <div class="card">
     <h1>Will you be my Valentine? 💕</h1>
-    <button id="yesBtn" onclick="yesClicked()">Yes 💖</button>
+    <button id="yesBtn">Yes 💖</button>
     <button id="noBtn">No 😜</button>
   </div>
 
   <script>
     const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
     const music = document.getElementById("loveMusic");
 
-    noBtn.addEventListener("mouseover", () => {
+    // Make No button run away
+    noBtn.addEventListener("mouseenter", () => {
       const x = Math.random() * (window.innerWidth - 100);
       const y = Math.random() * (window.innerHeight - 50);
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
     });
 
+    // Floating hearts
     function createHearts() {
       setInterval(() => {
         const heart = document.createElement("div");
@@ -107,22 +113,21 @@
       }, 300);
     }
 
-    function yesClicked() {
-      music.play();
-      document.body.innerHTML = `
-        <div class="final" style="
-          height:100vh;
-          display:flex;
-          flex-direction:column;
-          align-items:center;
-          justify-content:center;
-          text-align:center;
-          background:linear-gradient(135deg,#ff9a9e,#fad0c4);
-          font-family:Arial;">
+    // Yes button click
+    yesBtn.addEventListener("click", () => {
+
+      music.play().catch(() => {
+        console.log("Autoplay blocked, but should work after interaction.");
+      });
+
+      const card = document.querySelector(".card");
+
+      card.innerHTML = `
+        <div class="final">
           <h1>Yayyy! 💖😍</h1>
           <h2>Of course you said YES ❤️</h2>
           <p style="font-size:20px; max-width:600px;">
-            To my beautiful wife,<br><br>
+            To my beautiful wife, Pooja<br><br>
             You are my favorite person, my safe place,
             and the best decision I ever made.<br><br>
             I’d choose you in every lifetime. 💕
@@ -130,8 +135,9 @@
           <h3>Forever yours,<br>Anishek 😘</h3>
         </div>
       `;
+
       createHearts();
-    }
+    });
   </script>
 
 </body>
